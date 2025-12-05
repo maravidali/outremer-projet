@@ -32,4 +32,4 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
 2. Run `python analyze_entrepreneurship.py` to generate the analysis and graphs.
 
 ## Limitations
-The dataset has missing values for many financial variables, limiting quantitative analyses like productivity estimation. It is best suited for qualitative insights into enterprise structures and distributions.
+Most enterprises are individuals. They have missing values.
