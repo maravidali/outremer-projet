@@ -23,7 +23,7 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
 - 98.25% of enterprises are PME (small and medium enterprises), 1.43% Intermediate, 0.26% Large.
 - Top sectors include construction, health/social work, water supply, and real estate.
 - Fort-de-France has the highest concentration of enterprises.
-- Turnover varies significantly by category, with Large enterprises showing much higher median values.
+- Turnover varies significantly by category, with Large enterprises exhibiting greater variation over the years.
 
 ## Requirements
 - Python 3.x
