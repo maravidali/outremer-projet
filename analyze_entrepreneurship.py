@@ -5,6 +5,7 @@ import requests
 import geopandas as gpd
 import zipfile
 import urllib.request
+import unicodedata
 import gender_guesser.detector as gender
 
 # Expanded French name lists for better gender detection
@@ -133,22 +134,27 @@ commune_counts = df_unique['Ville'].value_counts()
 # Gender analysis of firm leaders
 d = gender.Detector()
 df_unique['first_name'] = df_unique['DirigeantprincipalNom'].str.split().str[0]
+def normalize_name(name):
+    return unicodedata.normalize('NFD', name).encode('ascii', 'ignore').decode('ascii')
+
 def get_gender_improved(name):
     if pd.isna(name):
         return 'unknown'
     gender = d.get_gender(name)
     if gender in ['unknown', 'andy']:
+        # Normalize name
+        norm_name = normalize_name(name)
         # Check hyphenated names
-        parts = name.lower().replace('-', ' ').split()
+        parts = norm_name.lower().replace('-', ' ').split()
         for part in parts:
-            if part in [m.lower() for m in french_male]:
+            if part in [normalize_name(m).lower() for m in french_male]:
                 return 'male'
-            elif part in [f.lower() for f in french_female]:
+            elif part in [normalize_name(f).lower() for f in french_female]:
                 return 'female'
         # Check full name lower
-        if name.lower() in [m.lower() for m in french_male]:
+        if norm_name.lower() in [normalize_name(m).lower() for m in french_male]:
             return 'male'
-        elif name.lower() in [f.lower() for f in french_female]:
+        elif norm_name.lower() in [normalize_name(f).lower() for f in french_female]:
             return 'female'
         return 'unknown'
     return gender
@@ -247,7 +253,7 @@ plt.figure(figsize=(8,6))
 identified_percent.plot(kind='pie', autopct='%1.1f%%')
 plt.title('Gender Distribution of Identified Firm Leaders')
 plt.ylabel('')
-plt.figtext(0.5, 0.02, '50.0% of firms have unknown gender due to missing or unrecognized names', ha='center', fontsize=10)
+plt.figtext(0.5, 0.02, '48.8% of firms have unknown gender due to missing or unrecognized names', ha='center', fontsize=10)
 plt.savefig('gender_distribution.png')
 print("Saved: gender_distribution.png")
 
