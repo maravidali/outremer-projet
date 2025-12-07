@@ -212,3 +212,29 @@ plt.grid(True)
 plt.tight_layout()
 plt.savefig('turnover_by_category_year.png')
 print("Saved: turnover_by_category_year.png")
+
+# Static Choropleth Map: Municipalities by number of enterprises
+# Download shapefile
+zip_url = 'https://www.data.gouv.fr/fr/datasets/r/8f251e1d-5a6b-4e4e-8e61-9b05b82b4e/download/communes-martinique.zip'
+response = requests.get(zip_url)
+with open('communes_martinique.zip', 'wb') as f:
+    f.write(response.content)
+
+# Extract zip
+with zipfile.ZipFile('communes_martinique.zip', 'r') as zip_ref:
+    zip_ref.extractall('shapefiles')
+
+# Read shapefile
+gdf = gpd.read_file('shapefiles/communes-martinique.shp')
+gdf['insee'] = gdf['insee'].astype(str)
+
+# Merge with commune_agg
+commune_agg.index.name = 'insee'
+gdf = gdf.merge(commune_agg, on='insee', how='left')
+
+# Plot
+fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+gdf.plot(column='count', ax=ax, cmap='YlOrRd', legend=True)
+ax.axis('off')
+plt.savefig('martinique_choropleth.png', bbox_inches='tight')
+print("Saved: martinique_choropleth.png")
