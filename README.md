@@ -16,6 +16,7 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
   - `sectors_2digit.png`: Bar chart of enterprise distribution by NACE 2-digit sectors (%).
   - `sectors_1digit.png`: Bar chart of enterprise distribution by NACE 1-digit sectors (%).
   - `turnover_by_category_year.png`: Line chart of median turnover by category (2011-2022).
+  - `gender_distribution.png`: Pie chart of gender distribution of firm leaders.
   - `martinique_choropleth.png`: Choropleth map of firm concentrations by municipality.
 
 ## Key Findings
@@ -23,6 +24,7 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
 - Firm composition: 98.25% PME (small and medium firms), 1.43% Intermediate, 0.26% Large.
 - Sector distribution highlights construction, health/social work, water supply, and real estate as dominant.
 - Geographic concentration is highest in Fort-de-France.
+- Gender distribution of firm leaders: 55.8% unknown, 33.3% male, 10.8% female.
 - Turnover dynamics show significant variation by firm category.
 
 ## Requirements
@@ -32,6 +34,7 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
 - geopandas
 - folium
 - requests
+- gender-guesser
 
 ## How to Run
 1. Ensure `data_martinique.dta` is in the project directory.

@@ -5,6 +5,7 @@ import requests
 import geopandas as gpd
 import zipfile
 import urllib.request
+import gender_guesser.detector as gender
 
 # Load the data using pandas (more memory efficient for large files)
 df = pd.read_stata('data_martinique.dta')
@@ -120,6 +121,21 @@ print(sector_2digit_percent)
 # All communes by number of enterprises (unique firms)
 commune_counts = df_unique['Ville'].value_counts()
 
+# Gender analysis of firm leaders
+d = gender.Detector()
+df_unique['first_name'] = df_unique['DirigeantprincipalNom'].str.split().str[0]
+df_unique['gender'] = df_unique['first_name'].apply(lambda x: d.get_gender(x) if pd.notna(x) else 'unknown')
+
+# Simplify gender
+gender_map = {'male': 'Male', 'female': 'Female', 'mostly_male': 'Male', 'mostly_female': 'Female', 'unknown': 'Unknown', 'andy': 'Unknown'}
+df_unique['gender_simple'] = df_unique['gender'].map(gender_map)
+
+gender_counts = df_unique['gender_simple'].value_counts()
+gender_percent = (gender_counts / gender_counts.sum()) * 100
+
+print("\nGender distribution of firm leaders (%):")
+print(gender_percent)
+
 # Generate graphs
 
 # Graph 1: Enterprises by age
@@ -183,6 +199,14 @@ plt.xticks(rotation=0)
 plt.tight_layout()
 plt.savefig('sectors_1digit.png')
 print("Saved: sectors_1digit.png")
+
+# Graph 4: Gender distribution
+plt.figure(figsize=(8,6))
+gender_percent.plot(kind='pie', autopct='%1.1f%%')
+plt.title('Gender Distribution of Firm Leaders')
+plt.ylabel('')
+plt.savefig('gender_distribution.png')
+print("Saved: gender_distribution.png")
 
 # Graph 6: Median turnover by category over years (2011-2025)
 df_years = df_unique[(df_unique['year'] >= 2011) & (df_unique['year'] <= 2022)]
