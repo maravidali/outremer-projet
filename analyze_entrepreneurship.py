@@ -134,12 +134,19 @@ def get_gender_improved(name):
         return 'unknown'
     gender = d.get_gender(name)
     if gender in ['unknown', 'andy']:
-        if name in french_male:
+        # Check hyphenated names
+        parts = name.lower().replace('-', ' ').split()
+        for part in parts:
+            if part in [m.lower() for m in french_male]:
+                return 'male'
+            elif part in [f.lower() for f in french_female]:
+                return 'female'
+        # Check full name lower
+        if name.lower() in [m.lower() for m in french_male]:
             return 'male'
-        elif name in french_female:
+        elif name.lower() in [f.lower() for f in french_female]:
             return 'female'
-        else:
-            return 'unknown'
+        return 'unknown'
     return gender
 
 df_unique['gender'] = df_unique['first_name'].apply(get_gender_improved)
@@ -235,7 +242,7 @@ plt.figure(figsize=(8,6))
 identified_percent.plot(kind='pie', autopct='%1.1f%%')
 plt.title('Gender Distribution of Identified Firm Leaders')
 plt.ylabel('')
-plt.figtext(0.5, 0.02, '55.4% of firms have unknown gender due to missing or unrecognized names', ha='center', fontsize=10)
+plt.figtext(0.5, 0.02, '50.6% of firms have unknown gender due to missing or unrecognized names', ha='center', fontsize=10)
 plt.savefig('gender_distribution.png')
 print("Saved: gender_distribution.png")
 
