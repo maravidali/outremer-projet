@@ -4,7 +4,7 @@
 This project analyzes firm characteristics and entrepreneurial dynamics in Martinique using comprehensive enterprise data from 2011-2025. The analysis examines firm age distributions, category compositions, sector breakdowns (NACE 1-digit and 2-digit classifications), geographic concentrations, and turnover trends by firm category to understand entrepreneurial patterns and firm evolution in the region.
 
 ## Data Source
-The data is sourced from CapFinancials, providing comprehensive financial and organizational information on enterprises in Martinique. The dataset includes over 867,000 enterprises with variables such as creation dates, categories (PME, ETI, GE), sectors (NACE codes), locations, and financial metrics.
+The data is sourced from CapFinancials, providing comprehensive financial and organizational information on firms in Martinique. The dataset includes over 867,000 firms with variables such as creation dates, categories (SME, Intermediate, Large), sectors (NACE codes), locations, and financial metrics.
 
 ## Files
 - `analyze_entrepreneurship.py`: Python script that loads the data and generates analysis and graphs.
@@ -23,7 +23,7 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
 - Firm composition: 98.25% PME (small and medium firms), 1.43% Intermediate, 0.26% Large.
 - Sector distribution highlights construction, health/social work, water supply, and real estate as dominant.
 - Geographic concentration is highest in Fort-de-France.
-- Turnover dynamics show significant variation by firm category, with Large firms exhibiting greater fluctuations over time.
+- Turnover dynamics show significant variation by firm category.
 
 ## Requirements
 - Python 3.x
