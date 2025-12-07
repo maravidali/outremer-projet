@@ -7,6 +7,11 @@ import zipfile
 import urllib.request
 import gender_guesser.detector as gender
 
+# French name lists for better gender detection
+french_male = ['Jean', 'Pierre', 'Michel', 'Philippe', 'Louis', 'Jacques', 'François', 'Alain', 'Nicolas', 'Patrick', 'Christophe', 'Eric', 'Stéphane', 'David', 'Thomas', 'Daniel', 'Antoine', 'Olivier', 'Sébastien', 'Emmanuel', 'Vincent', 'Christophe', 'Laurent', 'Romain', 'Guillaume', 'Julien', 'Benoît', 'Sylvain', 'Fabrice', 'Marc', 'Gilles', 'Bruno', 'Thierry', 'Denis', 'Pascal', 'Christian', 'Bernard', 'André', 'Robert', 'Paul', 'Henri', 'Georges', 'Charles', 'Joseph', 'Pierre', 'René', 'Marcel', 'Albert', 'Claude', 'Roger', 'Maurice', 'Raymond', 'Lucien', 'Eugène', 'Léon', 'Victor', 'Edouard', 'Alfred', 'Gustave', 'Jules', 'Emile', 'Auguste', 'Ferdinand', 'Achille', 'Adolphe', 'Alexandre', 'Amédée', 'Anatole', 'Aristide', 'Armand', 'Arthur', 'Augustin', 'Baptiste', 'Basile', 'Baudouin', 'Benjamin', 'Bertrand', 'Blanchet', 'Boniface', 'Célestin', 'César', 'Clément', 'Constant', 'Cyrille', 'Damien', 'Didier', 'Edmond', 'Elie', 'Emile', 'Ernest', 'Etienne', 'Eugène', 'Evariste', 'Félix', 'Fernand', 'Florent', 'Francis', 'Frédéric', 'Gabriel', 'Gaston', 'Gérard', 'Gilbert', 'Godefroy', 'Grégoire', 'Guy', 'Hector', 'Hervé', 'Hilaire', 'Honoré', 'Hubert', 'Hugues', 'Ignace', 'Irénée', 'Isidore', 'Jacques', 'Jérémie', 'Jérôme', 'Joachim', 'Jules', 'Justin', 'Lazare', 'Léandre', 'Léonce', 'Léopold', 'Lévi', 'Lionel', 'Loïc', 'Lothaire', 'Louis', 'Luc', 'Lucien', 'Ludovic', 'Marc', 'Marcel', 'Marin', 'Martin', 'Mathieu', 'Matthieu', 'Maurice', 'Maxime', 'Maximilien', 'Michel', 'Médéric', 'Modeste', 'Napoléon', 'Nathan', 'Nestor', 'Nicolas', 'Noël', 'Octave', 'Olivier', 'Onésime', 'Oscar', 'Pascal', 'Patrice', 'Paul', 'Philippe', 'Pierre', 'Prosper', 'Quentin', 'Raoul', 'Raphaël', 'Raymond', 'Rémi', 'René', 'Richard', 'Robert', 'Roch', 'Rodolphe', 'Roger', 'Roland', 'Romain', 'Roméo', 'Samuel', 'Sauveur', 'Sébastien', 'Serge', 'Simon', 'Stanislas', 'Stéphane', 'Sylvain', 'Théodore', 'Théophile', 'Thibault', 'Timothée', 'Toussaint', 'Urbain', 'Valentin', 'Valère', 'Victor', 'Vincent', 'Vivien', 'Xavier', 'Yves', 'Zacharie']
+
+french_female = ['Marie', 'Jeanne', 'Françoise', 'Monique', 'Nicole', 'Nathalie', 'Isabelle', 'Delphine', 'Catherine', 'Sylvie', 'Martine', 'Jacqueline', 'Anne', 'Christine', 'Valérie', 'Sandrine', 'Véronique', 'Stéphanie', 'Patricia', 'Christiane', 'Brigitte', 'Dominique', 'Michèle', 'Danielle', 'Cécile', 'Florence', 'Annie', 'Marie-Thérèse', 'Marie-France', 'Marie-Claude', 'Marie-Pierre', 'Marie-Jeanne', 'Marie-Louise', 'Marie-José', 'Marie-Christine', 'Marie-Hélène', 'Marie-Noëlle', 'Marie-Paule', 'Marie-Rose', 'Marie-Sylvie', 'Agnès', 'Alice', 'Amélie', 'Annette', 'Antoinette', 'Ariane', 'Aurore', 'Béatrice', 'Bernadette', 'Blanche', 'Camille', 'Caroline', 'Céline', 'Chantal', 'Charlotte', 'Claire', 'Claudine', 'Colette', 'Corinne', 'Denise', 'Diane', 'Edith', 'Elisabeth', 'Elodie', 'Emilie', 'Emma', 'Evelyne', 'Fabienne', 'Florence', 'Frédérique', 'Gabrielle', 'Geneviève', 'Georgette', 'Germaine', 'Ghislaine', 'Ginette', 'Hélène', 'Henriette', 'Inès', 'Irène', 'Isabelle', 'Jacqueline', 'Jeanne', 'Josiane', 'Josette', 'Julie', 'Juliette', 'Laurence', 'Léa', 'Léonie', 'Liliane', 'Line', 'Louise', 'Lucie', 'Madeleine', 'Magali', 'Marcelle', 'Marguerite', 'Marie', 'Marthe', 'Mathilde', 'Michèle', 'Mireille', 'Monique', 'Nadine', 'Natalie', 'Nathalie', 'Nicole', 'Noémie', 'Odette', 'Olivie', 'Paulette', 'Pénélope', 'Philomène', 'Pierrette', 'Rachel', 'Raymonde', 'Renée', 'Rita', 'Rosalie', 'Rose', 'Roseline', 'Sabine', 'Simone', 'Solange', 'Sophie', 'Suzanne', 'Sylvaine', 'Thérèse', 'Valentine', 'Valérie', 'Véronique', 'Violette', 'Viviane', 'Yvette', 'Yvonne', 'Zoé']
+
 # Load the data using pandas (more memory efficient for large files)
 df = pd.read_stata('data_martinique.dta')
 
@@ -124,7 +129,20 @@ commune_counts = df_unique['Ville'].value_counts()
 # Gender analysis of firm leaders
 d = gender.Detector()
 df_unique['first_name'] = df_unique['DirigeantprincipalNom'].str.split().str[0]
-df_unique['gender'] = df_unique['first_name'].apply(lambda x: d.get_gender(x) if pd.notna(x) else 'unknown')
+def get_gender_improved(name):
+    if pd.isna(name):
+        return 'unknown'
+    gender = d.get_gender(name)
+    if gender in ['unknown', 'andy']:
+        if name in french_male:
+            return 'male'
+        elif name in french_female:
+            return 'female'
+        else:
+            return 'unknown'
+    return gender
+
+df_unique['gender'] = df_unique['first_name'].apply(get_gender_improved)
 
 # Simplify gender
 gender_map = {'male': 'Male', 'female': 'Female', 'mostly_male': 'Male', 'mostly_female': 'Female', 'unknown': 'Unknown', 'andy': 'Unknown'}
@@ -142,6 +160,11 @@ identified_percent = (identified_counts / identified_counts.sum()) * 100
 
 print("\nGender distribution among identified firm leaders (%):")
 print(identified_percent)
+
+# Save unknown names for manual classification
+unknown_names = df_unique[df_unique['gender'].isin(['unknown', 'andy'])]['first_name'].dropna().unique()
+pd.DataFrame({'unknown_names': unknown_names}).to_csv('unknown_names.csv', index=False)
+print("Saved unknown names to unknown_names.csv for manual gender classification")
 
 # Generate graphs
 
@@ -212,6 +235,7 @@ plt.figure(figsize=(8,6))
 identified_percent.plot(kind='pie', autopct='%1.1f%%')
 plt.title('Gender Distribution of Identified Firm Leaders')
 plt.ylabel('')
+plt.figtext(0.5, 0.02, '55.4% of firms have unknown gender due to missing or unrecognized names', ha='center', fontsize=10)
 plt.savefig('gender_distribution.png')
 print("Saved: gender_distribution.png")
 
