@@ -16,7 +16,7 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
   - `sectors_2digit.png`: Bar chart of enterprise distribution by NACE 2-digit sectors (%).
   - `sectors_1digit.png`: Bar chart of enterprise distribution by NACE 1-digit sectors (%).
   - `turnover_by_category_year.png`: Line chart of median turnover by category (2011-2022).
-  - `martinique_choropleth.png`: Choropleth map of enterprise concentrations by commune.
+  - `martinique_choropleth.png`: Choropleth map of firm concentrations by commune.
 
 ## Key Findings
 - Firm age distribution shows most firms are young, with peaks at 4-5 years old.
