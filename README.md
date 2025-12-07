@@ -1,7 +1,7 @@
-# Outremer Projet: Entrepreneurship Analysis in Martinique
+# Outremer Projet: Firm Analysis and Entrepreneurial Dynamics in Martinique
 
 ## Overview
-This project analyzes entrepreneurship activity in Martinique using enterprise data from 2011-2025. The analysis focuses on enterprise age distribution, category distributions, sector breakdowns (NACE 1-digit and 2-digit), geographic concentrations, and turnover trends by category to evaluate entrepreneurial dynamics in the region.
+This project analyzes firm characteristics and entrepreneurial dynamics in Martinique using comprehensive enterprise data from 2011-2025. The analysis examines firm age distributions, category compositions, sector breakdowns (NACE 1-digit and 2-digit classifications), geographic concentrations, and turnover trends by firm category to understand entrepreneurial patterns and firm evolution in the region.
 
 ## Data Source
 The data is sourced from CapFinancials, providing comprehensive financial and organizational information on enterprises in Martinique. The dataset includes over 867,000 enterprises with variables such as creation dates, categories (PME, ETI, GE), sectors (NACE codes), locations, and financial metrics.
@@ -19,11 +19,11 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
   - `martinique_choropleth.png`: Choropleth map of enterprise concentrations by commune.
 
 ## Key Findings
-- Most enterprises are young, with peaks at ages 4-5 years.
-- 98.25% of enterprises are PME (small and medium enterprises), 1.43% Intermediate, 0.26% Large.
-- Top sectors include construction, health/social work, water supply, and real estate.
-- Fort-de-France has the highest concentration of enterprises.
-- Turnover varies significantly by category, with Large enterprises exhibiting greater variation over the years.
+- Firm age distribution shows most firms are young, with peaks at 4-5 years old.
+- Firm composition: 98.25% PME (small and medium firms), 1.43% Intermediate, 0.26% Large.
+- Sector distribution highlights construction, health/social work, water supply, and real estate as dominant.
+- Geographic concentration is highest in Fort-de-France.
+- Turnover dynamics show significant variation by firm category, with Large firms exhibiting greater fluctuations over time.
 
 ## Requirements
 - Python 3.x
@@ -38,4 +38,4 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
 2. Run `python analyze_entrepreneurship.py` to generate the analysis and graphs.
 
 ## Limitations
-Most enterprises are individuals with missing financial data. Analysis uses unique firms by SIREN.
+Many firms are individual entrepreneurs with incomplete financial data. Analysis focuses on unique firms identified by SIREN for accurate representation.
