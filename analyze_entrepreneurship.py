@@ -136,6 +136,13 @@ gender_percent = (gender_counts / gender_counts.sum()) * 100
 print("\nGender distribution of firm leaders (%):")
 print(gender_percent)
 
+# Percentage among identified genders
+identified_counts = gender_counts[gender_counts.index != 'Unknown']
+identified_percent = (identified_counts / identified_counts.sum()) * 100
+
+print("\nGender distribution among identified firm leaders (%):")
+print(identified_percent)
+
 # Generate graphs
 
 # Graph 1: Enterprises by age
@@ -200,10 +207,10 @@ plt.tight_layout()
 plt.savefig('sectors_1digit.png')
 print("Saved: sectors_1digit.png")
 
-# Graph 4: Gender distribution
+# Graph 4: Gender distribution (identified only)
 plt.figure(figsize=(8,6))
-gender_percent.plot(kind='pie', autopct='%1.1f%%')
-plt.title('Gender Distribution of Firm Leaders')
+identified_percent.plot(kind='pie', autopct='%1.1f%%')
+plt.title('Gender Distribution of Identified Firm Leaders')
 plt.ylabel('')
 plt.savefig('gender_distribution.png')
 print("Saved: gender_distribution.png")

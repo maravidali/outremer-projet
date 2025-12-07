@@ -24,7 +24,7 @@ The data is sourced from CapFinancials, providing comprehensive financial and or
 - Firm composition: 98.25% PME (small and medium firms), 1.43% Intermediate, 0.26% Large.
 - Sector distribution highlights construction, health/social work, water supply, and real estate as dominant.
 - Geographic concentration is highest in Fort-de-France.
-- Gender distribution of firm leaders: 55.8% unknown (missing or unrecognized names), 33.3% male, 10.8% female.
+- Gender distribution of firm leaders: 55.8% unknown (missing or unrecognized names); among identified: 75.4% male, 24.6% female.
 - Turnover dynamics show significant variation by firm category.
 
 ## Requirements
